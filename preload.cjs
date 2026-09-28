@@ -11,6 +11,11 @@ contextBridge.exposeInMainWorld("desktop", {
     isDesktop: true,
     // La página pide una notificación nativa → main process → Notification del SO.
     notify: (payload) => ipcRenderer.send("notify", payload),
+    // Ventana flotante del cronómetro (siempre encima). El estado se sincroniza
+    // por BroadcastChannel, no por aquí: esto solo abre/cierra/arrastra.
+    openTimerWidget: () => ipcRenderer.send("timer-widget:open"),
+    closeTimerWidget: () => ipcRenderer.send("timer-widget:close"),
+    moveTimerWidget: (dx, dy) => ipcRenderer.send("timer-widget:move", { dx, dy }),
 });
 
 // Los mismos labels que front/src/modules/notification/domain/entities/Notification.entity.ts

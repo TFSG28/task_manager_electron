@@ -27,6 +27,7 @@ const windowManager = require("./lib/window.cjs");
 const tray = require("./lib/tray.cjs");
 const updates = require("./lib/updates.cjs");
 const { registerIpc } = require("./lib/ipc.cjs");
+const timerWidget = require("./lib/timerWidget.cjs");
 
 // Antes de whenReady: switches de Chromium y ajustes del SO por plataforma.
 configurePlatform();
@@ -56,7 +57,7 @@ if (!gotLock) {
                 if (config.isAppUrl(url)) windowManager.navigateMainWindow(url);
             },
         });
-        registerIpc({ onNotify: notifications.showNativeNotification });
+        registerIpc({ onNotify: notifications.showNativeNotification, timerWidget });
 
         windowManager.createMainWindow();
 
