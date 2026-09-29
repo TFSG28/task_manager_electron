@@ -79,8 +79,11 @@ if (!gotLock) {
         // (descargando / listo) se repinta el menú del tray.
         updates.start({ onState: () => tray.refreshMenu() });
 
-        // macOS: clic en el dock recrea la ventana.
-        app.on("activate", () => windowManager.ensureMainWindow());
+        // macOS: clic en el dock → mostrar/recrear la ventana principal.
+        // (showMainWindow, no ensureMainWindow: si la ventana existe pero está
+        //  OCULTA — el close en macOS hace hide, no destroy — ensureMainWindow
+        //  solo la devolvía sin mostrarla, y el clic en el dock no hacía nada.)
+        app.on("activate", () => windowManager.showMainWindow());
         // La app vive en el tray hasta Quit explícito.
         app.on("window-all-closed", () => { /* no-op */ });
     });
