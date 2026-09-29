@@ -15,6 +15,7 @@ contextBridge.exposeInMainWorld("desktop", {
     // por BroadcastChannel, no por aquí: esto solo abre/cierra/arrastra.
     openTimerWidget: () => ipcRenderer.send("timer-widget:open"),
     closeTimerWidget: () => ipcRenderer.send("timer-widget:close"),
+    setTimerWidgetExpanded: (expanded) => ipcRenderer.send("timer-widget:expand", expanded),
     moveTimerWidget: (dx, dy) => ipcRenderer.send("timer-widget:move", { dx, dy }),
 });
 
