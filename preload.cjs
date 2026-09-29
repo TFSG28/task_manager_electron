@@ -11,6 +11,9 @@ contextBridge.exposeInMainWorld("desktop", {
     isDesktop: true,
     // La página pide una notificación nativa → main process → Notification del SO.
     notify: (payload) => ipcRenderer.send("notify", payload),
+    // Copia texto al portapapeles vía main process (navigator.clipboard no es
+    // fiable en Electron). No-op-safe: si el main no responde, no rompe.
+    copyText: (text) => ipcRenderer.send("clipboard:write", text),
     // Ventana flotante del cronómetro (siempre encima). El estado se sincroniza
     // por BroadcastChannel, no por aquí: esto solo abre/cierra/arrastra.
     openTimerWidget: () => ipcRenderer.send("timer-widget:open"),
